@@ -4,11 +4,14 @@
  */
 package edu.upb.chatupb_v2.bl.server;
 
+import edu.upb.chatupb_v2.bl.message.Invitacion;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.regex.Pattern;
 
 /**
  * @author rlaredo
@@ -40,8 +43,21 @@ public class SocketClient extends Thread {
             while ((message = br.readLine()) != null) {
                 System.out.println(message);
             }
+            String split[] = message.split(Pattern.quote("|"));
+            if(split.length == 0) {
+                return;
+            }
+            switch (split[0]) {
+                case "001": {
+                    Invitacion inv = Invitacion.parse(message);
+                    System.out.println(inv.generarTrama());
+                }
+                case "002":{
 
-            send("Hola Server!!!. "+System.lineSeparator());
+                }
+            }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,6 +65,7 @@ public class SocketClient extends Thread {
 
 
     public void send(String message) throws IOException {
+        message = message + System.lineSeparator();
         try {
             dout.write(message.getBytes("UTF-8"));
             dout.flush();

@@ -4,11 +4,6 @@
 package edu.upb.chatupb_v2;
 
 import edu.upb.chatupb_v2.bl.server.ChatServer;
-import edu.upb.chatupb_v2.bl.server.SocketClient;
-import edu.upb.chatupb_v2.repository.Contact;
-import edu.upb.chatupb_v2.repository.ContactDao;
-
-import java.util.List;
 
 /**
  * @author rlaredo
@@ -16,20 +11,19 @@ import java.util.List;
 public class ChatUPB_V2 {
 
     public static void main(String[] args) {
-        try {
+               /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ChatUI().setVisible(true);
+            }
+        });
+        
+        try{
             ChatServer chatServer = new ChatServer();
             chatServer.start();
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch(Exception e){
+        e.printStackTrace();
         }
-        System.out.println("ChatServer started..");
-
-        try {
-            SocketClient socketClient = new SocketClient("localhost");
-            socketClient.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        
     }
 }

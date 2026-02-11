@@ -4,10 +4,8 @@
  */
 package edu.upb.chatupb_v2.bl.server;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  *
@@ -26,12 +24,8 @@ public class ChatServer extends Thread {
     public void run() {
         while (true) {
             try {
-                Socket socketClient = this.server.accept();
-                DataOutputStream dout = new DataOutputStream(socketClient.getOutputStream());
-                String message = "Hola nuevo cliente!!!. "+System.lineSeparator();
-                dout.write(message.getBytes("UTF-8") );
-                dout.flush();
-                //BufferedReader br = new BufferedReader(new InputStreamReader(socketClient.getInputStream()));
+                SocketClient socketClient = new SocketClient(this.server.accept());
+                socketClient.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

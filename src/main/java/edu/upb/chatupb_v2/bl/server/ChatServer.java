@@ -12,12 +12,16 @@ import java.net.ServerSocket;
  * @author rlaredo
  */
 public class ChatServer extends Thread {
-
     private static final int port = 1900;
 
     private final ServerSocket server;
+    private SocketListener socketListener;
     public ChatServer() throws IOException {
         this.server = new ServerSocket(port);
+    }
+
+    public void addListener(SocketListener listener) {
+        this.socketListener = listener;
     }
 
     @Override
@@ -25,6 +29,7 @@ public class ChatServer extends Thread {
         while (true) {
             try {
                 SocketClient socketClient = new SocketClient(this.server.accept());
+                socketClient.addListener(this.socketListener);
                 socketClient.start();
             } catch (Exception e) {
                 e.printStackTrace();

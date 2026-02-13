@@ -1,6 +1,5 @@
 package edu.upb.chatupb_v2.bl.message;
 
-import java.net.Socket;
 import java.util.regex.Pattern;
 
 public class Invitacion extends Message{

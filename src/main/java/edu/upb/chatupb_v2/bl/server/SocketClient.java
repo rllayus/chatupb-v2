@@ -5,12 +5,15 @@
 package edu.upb.chatupb_v2.bl.server;
 
 import edu.upb.chatupb_v2.bl.message.Invitacion;
+import edu.upb.chatupb_v2.bl.message.Message;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -21,6 +24,7 @@ public class SocketClient extends Thread {
     private final String ip;
     private final DataOutputStream dout;
     private final BufferedReader br;
+    private List<SocketListener> socketListener = new ArrayList<>();
 
     public SocketClient(Socket socket) throws IOException {
         this.socket = socket;
@@ -36,33 +40,42 @@ public class SocketClient extends Thread {
         br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
     }
 
+    public void addListener(SocketListener listener) {
+        this.socketListener.add(listener);
+    }
+
     @Override
     public void run() {
         try {
             String message;
             while ((message = br.readLine()) != null) {
                 System.out.println(message);
-            }
-            String split[] = message.split(Pattern.quote("|"));
-            if(split.length == 0) {
-                return;
-            }
-            switch (split[0]) {
-                case "001": {
-                    Invitacion inv = Invitacion.parse(message);
-                    System.out.println(inv.generarTrama());
+                String split[] = message.split(Pattern.quote("|"));
+                if (split.length == 0) {
+                    return;
                 }
-                case "002":{
+                System.out.println("Llego");
+                switch (split[0]) {
+                    case "001": {
+                        System.out.println("Es invitacion");
+                        notificar(Invitacion.parse(message));
+                    }
+                    case "002": {
 
+                    }
                 }
             }
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void notificar(Message message) {
+        for (SocketListener listener : socketListener) {
+            java.awt.EventQueue.invokeLater(() -> listener.onMessage(message));
+        }
+    }
 
     public void send(String message) throws IOException {
         message = message + System.lineSeparator();

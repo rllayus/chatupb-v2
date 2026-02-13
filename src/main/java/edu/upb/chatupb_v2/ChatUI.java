@@ -4,15 +4,20 @@
  */
 package edu.upb.chatupb_v2;
 
+import edu.upb.chatupb_v2.bl.message.Invitacion;
+import edu.upb.chatupb_v2.bl.message.Message;
+import edu.upb.chatupb_v2.bl.server.ChatServer;
 import edu.upb.chatupb_v2.bl.server.SocketClient;
+import edu.upb.chatupb_v2.bl.server.SocketListener;
+
+import javax.swing.*;
 
 /**
  *
  * @author rlaredo
  */
-public class ChatUI extends javax.swing.JFrame {
+public class ChatUI extends javax.swing.JFrame implements SocketListener {
     SocketClient client;
-
     /**
      * Creates new form ChatUI
      */
@@ -86,11 +91,7 @@ public class ChatUI extends javax.swing.JFrame {
 
     private void jBtnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConectarActionPerformed
         // TODO add your handling code here:
-       try{
-        client = new SocketClient(jtIp.getText().toString());
-        client.start();
-       }catch(Exception e){
-       }
+
     }//GEN-LAST:event_jBtnConectarActionPerformed
 
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
@@ -144,5 +145,14 @@ public class ChatUI extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEnviar;
     private javax.swing.JTextField jtIp;
     private javax.swing.JTextField jtMensaje;
+
+    @Override
+    public void onMessage(Message message) {
+        if(message instanceof Invitacion){
+            Invitacion invitacion = (Invitacion) message;
+            JOptionPane.showMessageDialog(this, "Llego la invitacion: "+ invitacion.getNombre());
+        }
+        System.out.println("Llego la invitacion");
+    }
     // End of variables declaration//GEN-END:variables
 }

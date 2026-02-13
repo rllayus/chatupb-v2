@@ -12,18 +12,16 @@ public class ChatUPB_V2 {
 
     public static void main(String[] args) {
                /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ChatUI().setVisible(true);
-            }
-        });
-        
-        try{
+        final ChatUI chatUI = new ChatUI();
+        java.awt.EventQueue.invokeLater(() -> chatUI.setVisible(true));
+
+        try {
             ChatServer chatServer = new ChatServer();
             chatServer.start();
-        }catch(Exception e){
-        e.printStackTrace();
+            chatServer.addListener(chatUI);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        
+
     }
 }

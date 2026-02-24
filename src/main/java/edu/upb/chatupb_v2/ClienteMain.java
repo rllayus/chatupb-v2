@@ -7,8 +7,6 @@ public class ClienteMain {
         try {
             SocketClient socketClient = new SocketClient("localhost");
             socketClient.start();
-
-            socketClient.send("Hello");
         } catch (Exception e) {
             e.printStackTrace();
         }

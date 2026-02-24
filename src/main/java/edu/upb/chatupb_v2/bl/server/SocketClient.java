@@ -40,6 +40,10 @@ public class SocketClient extends Thread {
         br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
     }
 
+    public String getIp() {
+        return ip;
+    }
+
     public void addListener(SocketListener listener) {
         this.socketListener.add(listener);
     }
@@ -58,7 +62,9 @@ public class SocketClient extends Thread {
                 switch (split[0]) {
                     case "001": {
                         System.out.println("Es invitacion");
-                        notificar(Invitacion.parse(message));
+                        Invitacion invitacion = Invitacion.parse(message);
+                        invitacion.setIp(ip);
+                        notificar(invitacion);
                     }
                     case "002": {
 
@@ -73,14 +79,13 @@ public class SocketClient extends Thread {
 
     public void notificar(Message message) {
         for (SocketListener listener : socketListener) {
-            java.awt.EventQueue.invokeLater(() -> listener.onMessage(message));
+            java.awt.EventQueue.invokeLater(() -> listener.onMessage(this, message));
         }
     }
 
-    public void send(String message) throws IOException {
-        message = message + System.lineSeparator();
+    public void send(Message message) throws IOException {
         try {
-            dout.write(message.getBytes("UTF-8"));
+            dout.write(message.generarTrama().getBytes("UTF-8"));
             dout.flush();
         } catch (Exception e) {
             e.printStackTrace();

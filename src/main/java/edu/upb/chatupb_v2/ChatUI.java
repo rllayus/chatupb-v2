@@ -4,11 +4,11 @@
  */
 package edu.upb.chatupb_v2;
 
-import edu.upb.chatupb_v2.bl.message.Invitacion;
+
 import edu.upb.chatupb_v2.bl.message.Message;
-import edu.upb.chatupb_v2.bl.server.ChatServer;
 import edu.upb.chatupb_v2.bl.server.SocketClient;
 import edu.upb.chatupb_v2.bl.server.SocketListener;
+import edu.upb.chatupb_v2.repository.Contact;
 
 import javax.swing.*;
 
@@ -17,12 +17,19 @@ import javax.swing.*;
  * @author rlaredo
  */
 public class ChatUI extends javax.swing.JFrame implements SocketListener {
-    SocketClient client;
+  
+    private DefaultListModel<Contact> contacModel = new DefaultListModel<>();
     /**
      * Creates new form ChatUI
      */
     public ChatUI() {
         initComponents();
+        this.jLContactos.setCellRenderer(new ContactRenderer());
+        this.jContactos.setCellRenderer(new ContactRenderer());
+        
+        for (int i = 0; i < 10; i++) {
+            contacModel.add(i, new Contact(i, "CO"+i, "Ricardo "+i, "444", false));
+        }
     }
 
     /**
@@ -38,6 +45,10 @@ public class ChatUI extends javax.swing.JFrame implements SocketListener {
         jBtnConectar = new javax.swing.JButton();
         jBtnEnviar = new javax.swing.JButton();
         jtMensaje = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jLContactos = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jContactos = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,35 +66,56 @@ public class ChatUI extends javax.swing.JFrame implements SocketListener {
             }
         });
 
+        jLContactos.setModel(contacModel);
+        jLContactos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLContactosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jLContactos);
+
+        jContactos.setModel(contacModel);
+        jScrollPane2.setViewportView(jContactos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnEnviar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jtIp, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnEnviar)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(jBtnConectar)))
-                .addContainerGap(107, Short.MAX_VALUE))
+                        .addComponent(jtIp, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnConectar))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnConectar)
+                            .addComponent(jtIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtIp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnConectar))
-                .addGap(143, 143, 143)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnEnviar))
-                .addContainerGap(80, Short.MAX_VALUE))
+                    .addComponent(jBtnEnviar)
+                    .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(67, 67, 67))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
         );
 
         pack();
@@ -92,18 +124,18 @@ public class ChatUI extends javax.swing.JFrame implements SocketListener {
     private void jBtnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnConectarActionPerformed
         // TODO add your handling code here:
 
+
     }//GEN-LAST:event_jBtnConectarActionPerformed
 
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
         // TODO add your handling code here:
-        if(client != null){
-            try{
-            client.send(jtMensaje.getText().toString());
-            }catch(Exception e){
-            
-            }
-        }
+
     }//GEN-LAST:event_jBtnEnviarActionPerformed
+
+    private void jLContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLContactosMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLContactosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -143,16 +175,16 @@ public class ChatUI extends javax.swing.JFrame implements SocketListener {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnConectar;
     private javax.swing.JButton jBtnEnviar;
+    private javax.swing.JList<Contact> jContactos;
+    private javax.swing.JList<Contact> jLContactos;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jtIp;
     private javax.swing.JTextField jtMensaje;
+    // End of variables declaration//GEN-END:variables
 
     @Override
-    public void onMessage(Message message) {
-        if(message instanceof Invitacion){
-            Invitacion invitacion = (Invitacion) message;
-            JOptionPane.showMessageDialog(this, "Llego la invitacion: "+ invitacion.getNombre());
-        }
-        System.out.println("Llego la invitacion");
+    public void onMessage(SocketClient socketClient, Message invitacion) {
+        
     }
-    // End of variables declaration//GEN-END:variables
 }

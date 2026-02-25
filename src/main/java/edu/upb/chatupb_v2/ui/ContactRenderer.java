@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package edu.upb.chatupb_v2;
+package edu.upb.chatupb_v2.ui;
 
 import edu.upb.chatupb_v2.repository.Contact;
 import java.awt.Component;

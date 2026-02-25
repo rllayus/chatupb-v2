@@ -3,6 +3,7 @@
  */
 package edu.upb.chatupb_v2;
 
+import edu.upb.chatupb_v2.ui.ChatUI;
 import edu.upb.chatupb_v2.bl.server.ChatServer;
 
 /**

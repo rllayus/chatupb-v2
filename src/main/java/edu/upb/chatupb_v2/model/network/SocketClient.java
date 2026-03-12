@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class SocketClient extends Thread {
 
     public void send(AbstractMessage abstractMessage) throws IOException {
         try {
-            dout.write(abstractMessage.generarTrama().getBytes("UTF-8"));
+            dout.write(abstractMessage.generarTrama().getBytes(StandardCharsets.UTF_8));
             dout.flush();
         } catch (Exception e) {
             e.printStackTrace();

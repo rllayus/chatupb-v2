@@ -1,6 +1,7 @@
 package edu.upb.chatupb_v2.model.factory;
 
 import edu.upb.chatupb_v2.model.entities.AbstractMessage;
+import edu.upb.chatupb_v2.model.entities.Aceptar;
 import edu.upb.chatupb_v2.model.entities.Invitacion;
 
 import java.util.regex.Pattern;
@@ -17,6 +18,7 @@ public class MessageFactory {
                 return Invitacion.parse(message);
             }
             case "002": {
+                return Aceptar.parse(message);
 
             }
             default:

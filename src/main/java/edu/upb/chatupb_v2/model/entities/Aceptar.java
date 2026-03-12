@@ -1,7 +1,8 @@
-package edu.upb.chatupb_v2.model.factory;
+package edu.upb.chatupb_v2.model.entities;
 
-import edu.upb.chatupb_v2.model.entities.AbstractMessage;
+import edu.upb.chatupb_v2.model.network.SocketClient;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class Aceptar extends AbstractMessage {
@@ -30,6 +31,12 @@ public class Aceptar extends AbstractMessage {
     public String generarTrama() {
         return getCodigo() +"|" +idUsuario +"|" +nombre + System.lineSeparator();
     }
+
+    @Override
+    public void execute(SocketClient client) throws IOException {
+        client.send(this);
+    }
+
 
     public String getIdUsuario() {
         return idUsuario;

@@ -3,6 +3,7 @@ package edu.upb.chatupb_v2.controller;
 import edu.upb.chatupb_v2.controller.exception.OperationException;
 import edu.upb.chatupb_v2.model.entities.AbstractMessage;
 import edu.upb.chatupb_v2.model.entities.Invitacion;
+import edu.upb.chatupb_v2.model.entities.Aceptar;
 import edu.upb.chatupb_v2.model.network.SocketClient;
 import edu.upb.chatupb_v2.model.network.SocketListener;
 import edu.upb.chatupb_v2.model.repository.ContactDao;
@@ -12,6 +13,7 @@ import edu.upb.chatupb_v2.view.interfaces.IChatView;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.UUID;
 
 public class Mediador implements SocketListener {
     private static final Mediador INSTANCE = new Mediador();
@@ -48,12 +50,14 @@ public class Mediador implements SocketListener {
     public void sendMessage(String userId, AbstractMessage abstractMessage) {
         SocketClient client = this.clients.get(userId);
         if (client == null) {
+            System.out.println("Client not found");
             return;
         }
+
         try {
-            client.send(abstractMessage);
+            abstractMessage.execute(client);
         }catch (Exception e) {
-            e.printStackTrace();
+            System.out.println();
         }
         System.out.println("Enviado mensaje: " + abstractMessage.generarTrama());
         //Guardar mensaje en base de datos
@@ -80,10 +84,13 @@ public class Mediador implements SocketListener {
     }
 
     @Override
-    public void onMessage(SocketClient socketClient, AbstractMessage invitacion) {
-        clients.put(invitacion.getCodigo(), socketClient);
-        chatView.onMessage(invitacion);
+    public void onMessage(SocketClient socketClient, AbstractMessage message) {
+        if(message instanceof Invitacion invitacion) {
+            clients.put(invitacion.getIdUsuario(), socketClient);
+        }
+        chatView.onMessage(message);
     }
+
 
     @Override
     public void onCloseConnection(SocketClient socketClient) {

@@ -1,5 +1,9 @@
 package edu.upb.chatupb_v2.model.entities;
 
+import edu.upb.chatupb_v2.model.network.SocketClient;
+
+import java.io.IOException;
+
 public abstract class AbstractMessage {
     private String codigo;
     private String ip;
@@ -23,4 +27,5 @@ public abstract class AbstractMessage {
     }
 
     public abstract String generarTrama();
+    public abstract  void execute(SocketClient client) throws IOException;
 }

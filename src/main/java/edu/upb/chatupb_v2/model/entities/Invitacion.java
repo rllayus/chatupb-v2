@@ -1,5 +1,8 @@
 package edu.upb.chatupb_v2.model.entities;
 
+import edu.upb.chatupb_v2.model.network.SocketClient;
+
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class Invitacion extends AbstractMessage {
@@ -10,6 +13,7 @@ public class Invitacion extends AbstractMessage {
     public Invitacion() {
         super("001");
     }
+
     public Invitacion(String idUsuario, String nombre) {
         super("001");
         this.idUsuario = idUsuario;
@@ -18,7 +22,7 @@ public class Invitacion extends AbstractMessage {
 
     public static Invitacion parse(String trama) {
         String[] split = trama.split(Pattern.quote("|"));
-        if(split.length != 3) {
+        if (split.length != 3) {
             throw new IllegalArgumentException("Formato de trama no valido");
         }
         return new Invitacion(split[1], split[2]);
@@ -26,23 +30,30 @@ public class Invitacion extends AbstractMessage {
 
     @Override
     public String generarTrama() {
-        return getCodigo() +"|" +idUsuario +"|" +nombre + System.lineSeparator();
+        return getCodigo() + "|" + idUsuario + "|" + nombre + System.lineSeparator();
     }
+
+    @Override
+    public void execute(SocketClient client) throws IOException {
+        client.send(this);
+    }
+
 
     public String getIdUsuario() {
         return idUsuario;
     }
+
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-
 
 
 }

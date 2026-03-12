@@ -1,5 +1,6 @@
 package edu.upb.chatupb_v2.controller;
 
+import edu.upb.chatupb_v2.model.entities.Contact;
 import edu.upb.chatupb_v2.model.repository.ContactDao;
 import edu.upb.chatupb_v2.view.interfaces.IChatView;
 
@@ -15,4 +16,7 @@ public class ContactController {
         chatView.onLoadData(this.contactDao.findAll());
     }
 
+    public void saveContacts(Contact contact) throws Exception {
+        //contactDao.save(contact);
+    }
 }

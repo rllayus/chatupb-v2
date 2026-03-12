@@ -80,11 +80,11 @@ public class ContactDao extends DaoHelper<Contact> {
     }
 
     public void save(Contact contact) throws Exception {
-        String query = "INSERT INTO contact(code, name, ip) values (?,?,?)";
+        String query = "INSERT INTO contact(id, name, ip) values (?,?,?)";
         DaoHelper.QueryParameters params = new DaoHelper.QueryParameters() {
             @Override
             public void setParameters(PreparedStatement pst) throws SQLException {
-                pst.setString(1, contact.getCode());
+                pst.setString(1, contact.getId());
                 pst.setString(2, contact.getName());
                 pst.setString(3, contact.getIp());
             }

@@ -5,19 +5,18 @@
 package edu.upb.chatupb_v2.view;
 
 import edu.upb.chatupb_v2.controller.ContactController;
+import edu.upb.chatupb_v2.controller.Mediador;
 import edu.upb.chatupb_v2.controller.MessageController;
-import edu.upb.chatupb_v2.model.entities.AbstractMessage;
-import edu.upb.chatupb_v2.model.network.SocketClient;
-import edu.upb.chatupb_v2.model.network.SocketListener;
-import edu.upb.chatupb_v2.model.entities.Contact;
-import java.util.Date;
+import edu.upb.chatupb_v2.model.entities.*;
+import edu.upb.chatupb_v2.view.interfaces.IChatView;
+import lombok.Setter;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-
-import edu.upb.chatupb_v2.view.interfaces.IChatView;
-import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
+import java.awt.*;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -26,7 +25,9 @@ import java.util.List;
 public class ChatUI extends javax.swing.JFrame implements IChatView {
 
     private DefaultListModel<Contact> contacModel = new DefaultListModel<>();
+    @Setter
     private MessageController messageController;
+    @Setter
     private ContactController contactController;
 
     /**
@@ -69,6 +70,7 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Contactos"));
 
         jLContactos.setModel(contacModel);
+        jLContactos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jLContactos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLContactosMouseClicked(evt);
@@ -175,6 +177,11 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
 
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
         // TODO add your handling code here:
+        Contact contact = contacModel.get(jLContactos.getSelectedIndex());
+        TextMessage message = new TextMessage("0000000000000000000001", UUID.randomUUID().toString(), jtMensaje.getText().toString());
+        System.out.println(contact.getName());
+        System.out.println(contact.getId());
+        Mediador.getInstance().sendMessage(contact.getId(), message);
 
     }//GEN-LAST:event_jBtnEnviarActionPerformed
 
@@ -230,17 +237,28 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void onMessage(AbstractMessage invitacion) {
+    public void onMessage(AbstractMessage message) {
+        if(message instanceof Invitacion invitacion) {
+            int respuesta = JOptionPane.showConfirmDialog(this, "Quieres aceptar", "Invitacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(respuesta == JOptionPane.YES_OPTION) {
+                Contact contact = new Contact();
+                contact.setId(invitacion.getIdUsuario());
+                contact.setName(invitacion.getNombre());
+                contact.setIp(invitacion.getIp());
+                contact.setStateConnect(true);
+                try {
+                    contactController.saveContacts(contact);
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    return;
+                }
+                contacModel.addElement(contact);
+                jLContactos.setSelectedIndex(0);
+                Mediador.getInstance().sendMessage(invitacion.getIdUsuario(), new Aceptar("0000000000000000000001", "Ricardo Laredo"));
 
+            }
+        }
 
-    }
-
-    public void setMessageController(MessageController messageController) {
-        this.messageController = messageController;
-    }
-
-    public void setContactController(ContactController contactController) {
-        this.contactController = contactController;
     }
 
     @Override

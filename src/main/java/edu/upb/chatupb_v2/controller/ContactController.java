@@ -16,7 +16,33 @@ public class ContactController {
         chatView.onLoadData(this.contactDao.findAll());
     }
 
-    public void saveContacts(Contact contact) throws Exception {
-        //contactDao.save(contact);
+    public void save(Contact contact) {
+        try {
+            if(!contactDao.exist(contact.getId())) {
+                contactDao.save(contact);
+            }else{
+                contactDao.update(contact);
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public boolean exist(String id) {
+        try {
+            return contactDao.exist(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Contact getById(String id) {
+        try {
+            return contactDao.findById(id);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

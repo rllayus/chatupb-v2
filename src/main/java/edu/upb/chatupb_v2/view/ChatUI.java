@@ -14,12 +14,11 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
- *
  * @author rlaredo
  */
 public class ChatUI extends javax.swing.JFrame implements IChatView {
@@ -41,7 +40,7 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
 
         ChatItemLeft chatItemLeft = new ChatItemLeft("Hola, bien y vos como vas?", "Tu", new Date());
         this.jPanelChat.add(chatItemLeft, "wrap, w 80%, al right");
-        
+
         this.jPanelChat.repaint();
         this.jPanelChat.revalidate();
     }
@@ -81,18 +80,18 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jSplitPane1.setLeftComponent(jPanel1);
@@ -111,37 +110,37 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         javax.swing.GroupLayout jPanelChatLayout = new javax.swing.GroupLayout(jPanelChat);
         jPanelChat.setLayout(jPanelChatLayout);
         jPanelChatLayout.setHorizontalGroup(
-            jPanelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+                jPanelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanelChatLayout.setVerticalGroup(
-            jPanelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 514, Short.MAX_VALUE)
+                jPanelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 514, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelChat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnEnviar)))
-                .addGap(0, 6, Short.MAX_VALUE))
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jPanelChat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jBtnEnviar)))
+                                .addGap(0, 6, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jPanelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnEnviar)
-                    .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jPanelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jBtnEnviar)
+                                        .addComponent(jtMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())
         );
 
         jPanelChat.setMaximumSize(null);
@@ -161,15 +160,15 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -178,7 +177,7 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
     private void jBtnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEnviarActionPerformed
         // TODO add your handling code here:
         Contact contact = contacModel.get(jLContactos.getSelectedIndex());
-        TextMessage message = new TextMessage("0000000000000000000001", UUID.randomUUID().toString(), jtMensaje.getText().toString());
+        TextMessage message = new TextMessage("0000000000000000000001", jtMensaje.getText().toString());
         System.out.println(contact.getName());
         System.out.println(contact.getId());
         Mediador.getInstance().sendMessage(contact.getId(), message);
@@ -197,7 +196,7 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -238,25 +237,38 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
 
     @Override
     public void onMessage(AbstractMessage message) {
-        if(message instanceof Invitacion invitacion) {
-            int respuesta = JOptionPane.showConfirmDialog(this, "Quieres aceptar", "Invitacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if(respuesta == JOptionPane.YES_OPTION) {
-                Contact contact = new Contact();
-                contact.setId(invitacion.getIdUsuario());
-                contact.setName(invitacion.getNombre());
-                contact.setIp(invitacion.getIp());
-                contact.setStateConnect(true);
-                try {
-                    contactController.saveContacts(contact);
-                }catch (Exception e) {
-                    e.printStackTrace();
+        if (message instanceof Invitacion invitacion) {
+            Contact contact = null;
+            if (!contactController.exist(invitacion.getIdUsuario())) {
+                int respuesta = JOptionPane.showConfirmDialog(this, "Quieres aceptar", "Invitacion", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    contact = new Contact();
+                    contact.setId(invitacion.getIdUsuario());
+                    contact.setName(invitacion.getNombre());
+                    contact.setIp(invitacion.getIp());
+                    contact.setStateConnect(true);
+                    contactController.save(contact);
+
+                    contacModel.addElement(contact);
+                    jLContactos.setSelectedIndex(contacModel.size() - 1);
+                }
+            } else {
+                contact = contactController.getById(invitacion.getIdUsuario());
+                if (contact == null) {
                     return;
                 }
-                contacModel.addElement(contact);
-                jLContactos.setSelectedIndex(0);
-                Mediador.getInstance().sendMessage(invitacion.getIdUsuario(), new Aceptar("0000000000000000000001", "Ricardo Laredo"));
+                contacModel.elements().asIterator().forEachRemaining(cont -> {
+                    if (cont.getId().equals(invitacion.getIdUsuario())) {
+                        cont.setStateConnect(true);
+                    }
+                });
 
+//                Collections.list(contacModel.elements()).stream()
+//                        .filter(cont -> cont.getId().equals(invitacion.getIdUsuario()))
+//                        .findFirst()
+//                        .ifPresent(cont -> cont.setStateConnect(true));
             }
+            Mediador.getInstance().sendMessage(invitacion.getIdUsuario(), new Aceptar("0000000000000000000001", "Ricardo Laredo"));
         }
 
     }

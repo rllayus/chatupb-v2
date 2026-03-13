@@ -196,6 +196,44 @@ public class DaoHelper<T>  {
         return -1;
     }
 
+    boolean executeQueryExist(String query, QueryParameters params)
+            throws ConnectException, SQLException {
+        Connection conn;
+        try {
+            conn = ConnectionDB.getInstance().getConection();
+        } catch (Exception ex) {
+            log.error("No se logro crear conexion a la base de datos", ex);
+            throw new ConnectException("No se logro crear conexion a la base de datos");
+        }
+        try (PreparedStatement st = conn.prepareStatement(query)) {
+            if (params != null) {
+                params.setParameters(st);
+            }
+            boolean status = st.execute();
+            if (status) {
+                try (ResultSet result = st.getResultSet()) {
+                    if (result.next()) {
+                        return result.getBoolean(1);
+                    }
+                    return false;
+                }
+            } else {
+                st.close();
+            }
+        } catch (SQLException e) {
+            log.error("Excepcion sql al ejecutar la query : {}  causa => {}", query, e.getMessage());
+            throw e;
+        } catch (Exception e) {
+            log.error("Error desconocido al ejecutar query : {}", query, e);
+            throw e;
+        } finally {
+            if (!conn.isClosed()) {
+                conn.close();
+            }
+        }
+        return false;
+    }
+
     /**
      * Metodo para llamar a un procedimiento almacenado
      *

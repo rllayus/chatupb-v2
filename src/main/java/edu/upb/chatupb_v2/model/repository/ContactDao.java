@@ -28,9 +28,6 @@ public class ContactDao extends DaoHelper<Contact> {
         if (existColumn(result, Column.ID)) {
             contact.setId(result.getString(Column.ID));
         }
-        if (existColumn(result, Column.CODE)) {
-            contact.setCode(result.getString(Column.CODE));
-        }
         if (existColumn(result, Column.NAME)) {
             contact.setName(result.getString(Column.NAME));
         }
@@ -55,24 +52,24 @@ public class ContactDao extends DaoHelper<Contact> {
         return executeQuery(query, resultReader);
     }
 
-    public boolean exist(String argument) throws ConnectException, SQLException {
-        String query = "SELECT count(*) FROM contact WHERE " + argument;
+    public boolean existById(String id) throws ConnectException, SQLException {
+        String query = "SELECT count(*) FROM contact WHERE code='" + id + "'";
         return executeQueryCount(query, null) == 1;
     }
 
-    public boolean existByCode(String code) throws ConnectException, SQLException {
-        String query = "SELECT count(*) FROM contact WHERE code='" + code + "'";
-        return executeQueryCount(query, null) == 1;
-    }
-
-    public Contact findByCode(String code) throws ConnectException, SQLException {
-        String query = "SELECT * FROM contact WHERE code ='" + code + "'";
+    public Contact findById(String code) throws ConnectException, SQLException {
+        String query = "SELECT * FROM contact WHERE id ='" + code + "'";
         System.out.println(query);
         List<Contact> list = executeQuery(query, resultReader);
         if (list.isEmpty()) {
             return null;
         }
         return list.get(0);
+    }
+
+    public boolean exist(String id) throws ConnectException, SQLException {
+        String query = "SELECT exists(SELECT 1  FROM contact WHERE id =?)";
+        return executeQueryExist(query, pst -> pst.setString(1, id));
     }
 
     public void update(String query) throws Exception {
@@ -93,12 +90,12 @@ public class ContactDao extends DaoHelper<Contact> {
     }
 
     public void update(Contact contact) throws Exception {
-        String query = "UPDATE contact SET IP=? WHERE code =?";
+        String query = "UPDATE contact SET IP=? WHERE id =?";
         DaoHelper.QueryParameters params = new DaoHelper.QueryParameters() {
             @Override
             public void setParameters(PreparedStatement pst) throws SQLException {
                 pst.setString(1, contact.getIp());
-                pst.setString(2, contact.getCode());
+                pst.setString(2, contact.getId());
             }
         };
         super.update(query, params);

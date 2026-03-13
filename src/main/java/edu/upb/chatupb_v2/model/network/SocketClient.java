@@ -68,6 +68,9 @@ public class SocketClient extends Thread {
     }
 
     public void notificar(AbstractMessage abstractMessage) {
+        if(abstractMessage == null) {
+            return;
+        }
         for (SocketListener listener : socketListener) {
             java.awt.EventQueue.invokeLater(() -> listener.onMessage(this, abstractMessage));
         }

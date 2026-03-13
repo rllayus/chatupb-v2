@@ -16,19 +16,21 @@ import java.io.Serializable;
 public class Contact implements Serializable, Model {
     public static final String ME_CODE = "af3bc20a-766c-4cd4-813d-b1067a01fa9a";
     private String id;
-    private String code;
     private String name;
     private String ip;
     private boolean stateConnect = false;
-    
-    public String roomCode(){
-        return ME_CODE + code;
-    }
+
 
 
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        String iconoEstado = stateConnect ? "🟢" : "🔴";
+        return iconoEstado + " " + name + " (IP: " + ip + ")";
     }
 }
 

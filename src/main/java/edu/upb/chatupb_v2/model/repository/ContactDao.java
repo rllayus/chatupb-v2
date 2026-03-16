@@ -10,13 +10,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Slf4j
-public class ContactDao extends DaoHelper<Contact> {
+public class ContactDao extends DaoHelper<Contact> implements IContactDao {
     public static final class Column{
         public static final String ID= "id";
-        public static final String CODE ="code";
         public static final String NAME ="name";
         public static final String IP ="ip";
-
     }
 
     public ContactDao() {
@@ -57,8 +55,8 @@ public class ContactDao extends DaoHelper<Contact> {
         return executeQueryCount(query, null) == 1;
     }
 
-    public Contact findById(String code) throws ConnectException, SQLException {
-        String query = "SELECT * FROM contact WHERE id ='" + code + "'";
+    public Contact findById(String id) throws ConnectException, SQLException {
+        String query = "SELECT * FROM contact WHERE id ='" + id + "'";
         System.out.println(query);
         List<Contact> list = executeQuery(query, resultReader);
         if (list.isEmpty()) {

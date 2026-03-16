@@ -1,14 +1,17 @@
 package edu.upb.chatupb_v2.controller;
 
 import edu.upb.chatupb_v2.model.entities.Contact;
+import edu.upb.chatupb_v2.model.repository.CacheContactDao;
 import edu.upb.chatupb_v2.model.repository.ContactDao;
+import edu.upb.chatupb_v2.model.repository.EncryContactDao;
+import edu.upb.chatupb_v2.model.repository.IContactDao;
 import edu.upb.chatupb_v2.view.interfaces.IChatView;
 
 public class ContactController {
-    private final ContactDao contactDao;
+    private final IContactDao contactDao;
     private final IChatView chatView;
     public ContactController(IChatView chatView) {
-        this.contactDao = new ContactDao();
+        this.contactDao = new EncryContactDao ( new CacheContactDao(new ContactDao()));
         this.chatView = chatView;
     }
 

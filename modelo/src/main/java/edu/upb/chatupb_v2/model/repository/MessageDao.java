@@ -17,7 +17,7 @@ public class MessageDao extends DaoHelper<TextMessage> {
         super();
     }
 
-    DaoHelper.ResultReader<TextMessage> resultReader = result -> {
+    ResultReader<TextMessage> resultReader = result -> {
         TextMessage message = new TextMessage();
         if (existColumn(result, Column.ID)) {
             message.setId(result.getString(Column.ID));

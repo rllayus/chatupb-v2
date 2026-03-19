@@ -8,15 +8,12 @@ import edu.upb.chatupb_v2.controller.ContactController;
 import edu.upb.chatupb_v2.controller.Mediador;
 import edu.upb.chatupb_v2.controller.MessageController;
 import edu.upb.chatupb_v2.model.entities.*;
-import edu.upb.chatupb_v2.view.interfaces.IChatView;
+import edu.upb.chatupb_v2.controller.interfaces.IChatView;
 import lombok.Setter;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 

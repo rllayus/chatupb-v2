@@ -1,8 +1,8 @@
 package edu.upb.chatupb_v2.controller;
 
+import edu.upb.chatupb_v2.controller.interfaces.IChatView;
 import edu.upb.chatupb_v2.model.entities.TextMessage;
 import edu.upb.chatupb_v2.model.repository.MessageDao;
-import edu.upb.chatupb_v2.view.interfaces.IChatView;
 
 import java.util.List;
 

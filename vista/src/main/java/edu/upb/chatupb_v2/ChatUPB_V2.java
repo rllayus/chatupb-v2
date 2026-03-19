@@ -21,7 +21,7 @@ public class ChatUPB_V2 {
         java.awt.EventQueue.invokeLater(() -> chatUI.setVisible(true));
 
         try {
-            ChatServer chatServer = new ChatServer();
+            ChatServer chatServer = new ChatServer(Mediador.getInstance());
             chatServer.start();
         }catch (Exception e){
             e.printStackTrace();

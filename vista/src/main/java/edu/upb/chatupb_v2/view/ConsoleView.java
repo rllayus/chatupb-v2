@@ -14,7 +14,7 @@ import edu.upb.chatupb_v2.controller.ContactController;
 import edu.upb.chatupb_v2.controller.Mediador;
 import edu.upb.chatupb_v2.model.entities.*;
 import edu.upb.chatupb_v2.model.network.SocketClient;
-import edu.upb.chatupb_v2.view.interfaces.IChatView;
+import edu.upb.chatupb_v2.controller.interfaces.IChatView;
 
 import java.io.IOException;
 import java.util.List;

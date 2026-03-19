@@ -21,7 +21,7 @@ public class ContactDao extends DaoHelper<Contact> implements IContactDao {
         super();
     }
 
-    DaoHelper.ResultReader<Contact> resultReader = result -> {
+    ResultReader<Contact> resultReader = result -> {
         Contact contact = new Contact();
         if (existColumn(result, Column.ID)) {
             contact.setId(result.getString(Column.ID));
@@ -76,7 +76,7 @@ public class ContactDao extends DaoHelper<Contact> implements IContactDao {
 
     public void save(Contact contact) throws Exception {
         String query = "INSERT INTO contact(id, name, ip) values (?,?,?)";
-        DaoHelper.QueryParameters params = new DaoHelper.QueryParameters() {
+        QueryParameters params = new QueryParameters() {
             @Override
             public void setParameters(PreparedStatement pst) throws SQLException {
                 pst.setString(1, contact.getId());
@@ -89,7 +89,7 @@ public class ContactDao extends DaoHelper<Contact> implements IContactDao {
 
     public void update(Contact contact) throws Exception {
         String query = "UPDATE contact SET IP=? WHERE id =?";
-        DaoHelper.QueryParameters params = new DaoHelper.QueryParameters() {
+        QueryParameters params = new QueryParameters() {
             @Override
             public void setParameters(PreparedStatement pst) throws SQLException {
                 pst.setString(1, contact.getIp());

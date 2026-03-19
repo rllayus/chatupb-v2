@@ -14,6 +14,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +46,6 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         this.jPanelChat.repaint();
         this.jPanelChat.revalidate();
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -178,10 +179,7 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
         // TODO add your handling code here:
         Contact contact = contacModel.get(jLContactos.getSelectedIndex());
         TextMessage message = new TextMessage("0000000000000000000001", jtMensaje.getText().toString());
-        System.out.println(contact.getName());
-        System.out.println(contact.getId());
         Mediador.getInstance().sendMessage(contact.getId(), message);
-
     }//GEN-LAST:event_jBtnEnviarActionPerformed
 
     private void jLContactosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLContactosMouseClicked
@@ -270,7 +268,6 @@ public class ChatUI extends javax.swing.JFrame implements IChatView {
             }
             Mediador.getInstance().sendMessage(invitacion.getIdUsuario(), new Aceptar("0000000000000000000001", "Ricardo Laredo"));
         }
-
     }
 
     @Override

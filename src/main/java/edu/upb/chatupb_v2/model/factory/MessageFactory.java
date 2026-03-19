@@ -26,7 +26,7 @@ public class MessageFactory {
                 return TextMessage.parse(message);
             }
             default: {
-                System.out.println("Comando inválido");
+                System.out.println("");
             }
         }
         return null;
